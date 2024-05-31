@@ -7,14 +7,14 @@ const preload = join(__dirname,'../preload/index.js')
 
 process.env.DIST_ELECTRON = join(__dirname, "../");
 process.env.DIST = join(process.env.DIST_ELECTRON, "../dist");
-let url = process.env.VITE_DEV_SERVER_URL;
+const url = process.env.VITE_DEV_SERVER_URL;
 const indexHtml = join(process.env.DIST, "index.html");
 
 
 const createWindow = () => {
    win = new BrowserWindow({
-    width: 500,
-    height: 400,
+    width: 1000,
+    height: 800,
     webPreferences: {
       preload,
       nodeIntegration: true,
@@ -23,12 +23,13 @@ const createWindow = () => {
    })
   if(process.env.NODE_ENV === 'development'){
     win.loadURL(url as string)
+    win.webContents.openDevTools()
   } else {
     win.loadFile(indexHtml)    
   }
 }
 app.whenReady().then(() => { 
-  ipcMain.handle('ping',()=>'pong')
+  ipcMain.on('ping',()=>console.log('pong'));
   createWindow()
   app.on('ready', () => {
     if (BrowserWindow.getAllWindows().length === 0) {

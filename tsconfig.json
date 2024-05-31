@@ -20,6 +20,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": ["src","electron/preload/*.d.ts"],
+  "references": [{ "path": "./tsconfig.node.json" }],
+  "extends":"@electron-toolkit/tsconfig/tsconfig.web.json"
 }
